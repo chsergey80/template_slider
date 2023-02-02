@@ -1,0 +1,60 @@
+/*CONTENT — ведь наш слайдер должен быть чаще всего куда-то вписан*/
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/*LEAD — одно из возможных содержимых слайдера*/
+.lead {
+  display: grid;
+  /*обратите внимание на построение грида*/
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: min-content 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "title image"
+    "text image";
+}
+
+.lead__title {
+  grid-area: title;
+}
+
+.lead__text {
+  grid-area: text;
+}
+
+.lead__image {
+  grid-area: image;
+}
+
+/*SLIDER — слайдер это только контейнер, он не должен быть зависим от своего содержимого*/
+.slider {
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  /*в корне объявляем переменные*/
+  --slidesCount: 3;
+  --activeSlide: 0;
+  --speed: 0.3s;
+}
+
+.slider__container {
+  /*можно сделать и флексами, аналогично только нужно будет на итемы размеры повесить*/
+  display: grid;
+  /*грид позволяет управлять размером слайда сразу и дает жесткую линию без соскакивания*/
+  grid-template-columns: repeat(var(--slidesCount), 100%);
+  grid-template-rows: 1fr;
+  position: relative; /*если понадобится абсолютное позиционирование внутри, для контролов например*/
+  left: calc(var(--activeSlide) * -100%);
+  transition: left var(--speed) ease-in-out; /*можно сделать опциональным*/
+}
+
+.slider__item {
+  max-width: 100%;
+}
+
+.slider__controls {
+  position: absolute;
+  bottom: 1rem;
+}
